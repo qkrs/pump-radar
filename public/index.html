@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pump Radar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="icon" href="/favicon.svg" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="top">
+        <div class="brand">
+          <span class="mark" aria-hidden="true"></span>
+          <div>
+            <strong>Pump Radar</strong>
+            <small>flujo en vivo de pump.fun</small>
+          </div>
+        </div>
+        <div class="balance" id="balance">
+          <span>billetera</span>
+          <b id="balance-total">—</b>
+          <small id="balance-split"></small>
+        </div>
+        <div class="solbox">
+          <span>cotización</span>
+          <b id="sol">—</b>
+        </div>
+        <label class="search">
+          <input id="q" type="search" placeholder="Buscar nombre, ticker o mint" autocomplete="off" />
+        </label>
+        <div class="live" id="live">
+          <i></i>
+          <span id="live-label">conectando</span>
+          <small id="ago"></small>
+        </div>
+      </header>
+
+      <nav class="nav" id="nav"></nav>
+
+      <main class="board">
+        <div id="stale" class="stale" hidden></div>
+        <div class="board-head">
+          <div>
+            <h1 id="board-title">Score</h1>
+            <p id="board-desc"></p>
+          </div>
+          <div class="windows" id="windows">
+            <button data-w="m5" class="on">5m</button>
+            <button data-w="m15">15m</button>
+            <button data-w="h1">1h</button>
+          </div>
+        </div>
+        <div class="thead">
+          <button data-sort="score">Score</button>
+          <button data-sort="name">Moneda</button>
+          <button data-sort="mcap">Market cap</button>
+          <button data-sort="change">Cambio</button>
+          <button data-sort="vol">Volumen</button>
+          <button data-sort="buy">Compras</button>
+        </div>
+        <div class="rows" id="rows"></div>
+      </main>
+
+      <aside class="detail" id="detail">
+        <div class="empty-detail">Elegí una moneda para ver el score, el gráfico y la cinta.</div>
+      </aside>
+
+      <section class="paper-wrap" aria-label="Cuenta de papel">
+        <div class="paper" id="paper"></div>
+        <section class="bot" id="bot" aria-label="Bot en vivo">
+          <form id="bot-key">
+            <label>Clave privada
+              <input id="bot-secret" type="password" autocomplete="off" spellcheck="false" placeholder="clave base58, una línea" />
+            </label>
+            <p class="hint">En el cuadro de pump, el Copy chico copia la dirección. El botón verde Copy key copia la clave. Pegá esa línea larga acá y apretá Guardar clave. Abajo tiene que decir que la billetera empieza con Gq4.</p>
+            <button type="submit">Guardar clave</button>
+          </form>
+          <form id="bot-run">
+            <label>Presupuesto (USD)
+              <input id="bot-budget" type="number" min="5" max="15" step="1" value="15" />
+            </label>
+            <label>Minutos
+              <input id="bot-minutes" type="number" min="5" max="180" value="45" />
+            </label>
+            <label>Frenar si pierde (USD)
+              <input id="bot-loss" type="number" min="1" max="15" step="1" value="5" />
+            </label>
+            <label>Frenar si gana (USD)
+              <input id="bot-target" type="number" min="1" max="15" step="1" value="3" />
+            </label>
+            <div class="bot-actions">
+              <button type="submit">Empezar</button>
+              <button id="bot-stop" type="button" class="stop">Parar y cerrar</button>
+              <button id="bot-monitor" type="button">Monitoreo</button>
+            </div>
+          </form>
+          <div id="bot-state" class="hint">Cargando el bot…</div>
+        </section>
+        <div class="lessons">
+          <p><b>Vela ya vertical.</b> FORKIUS, score 79 y +34% en 5m, a los 16s estaba en −24%. ASH, +40% en 5m, a los 9s estaba en −16%. No hubo precio en el stop de −12%.</p>
+          <p><b>Pool de unos miles.</b> FLOPPY salió a −47% con $3,627. COLLECTIBLE a −26% con $4,436. Gumshoos, con $7,600, sí respetó el stop y cerró en −12.5%.</p>
+          <p><b>Porcentaje sin volumen.</b> VET.O y ORVIX subían +4% a +6% con menos de $400 en 5m. MUK marcaba +16% con $887 y a los 13s estaba en −14%.</p>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <span id="status-line">escuchando el mercado…</span>
+        <span>El score lee el flujo. No es una probabilidad real de profit ni un consejo financiero.</span>
+      </footer>
+    </div>
+    <div id="monitor" class="monitor" hidden>
+      <div class="monitor-card" role="dialog" aria-labelledby="monitor-title">
+        <header class="monitor-top">
+          <strong id="monitor-title">Monitoreo</strong>
+          <span id="monitor-phase"></span>
+          <button id="monitor-close" type="button">Cerrar</button>
+        </header>
+        <div id="monitor-body"></div>
+      </div>
+    </div>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
